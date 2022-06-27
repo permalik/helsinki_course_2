@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -7,6 +8,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState(0);
   const [searchParams, setSearchParams] = useState('');
+  const [notes, setNotes] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,9 +28,17 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    axios.get('https://localhost:3001/persons').then((res) => {
+      console.log(res.data);
+      setNotes(res.data);
+    });
+  }, []);
+
   return (
     <div>
       <h1>Phonebook</h1>
+      <div>{notes}</div>
       <h2>Filter</h2>
       <div>
         Search:{' '}
