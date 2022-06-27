@@ -6,6 +6,7 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState(0);
+  const [searchParams, setSearchParams] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,13 +28,20 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <h2>Filter</h2>
+      <div>
+        Search:{' '}
+        <input onChange={(e) => setSearchParams(e.target.value)} type='text' />
+      </div>
+      <h2>Add New Contact</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input onChange={(e) => setNewName(e.target.value)} />
+          Name:{' '}
+          <input onChange={(e) => setNewName(e.target.value)} type='text' />
         </div>
         <div>
-          number: <input onChange={(e) => setNewNumber(e.target.value)} />
+          Number: <input onChange={(e) => setNewNumber(e.target.value)} />
         </div>
         <div>
           <button type='submit'>add</button>
@@ -41,11 +49,13 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person, index) => (
-          <li key={index}>
-            {person.name}: {person.number}
-          </li>
-        ))}
+        {persons.map((person, index) =>
+          person.name.includes(searchParams) ? (
+            <li key={index}>
+              {person.name}: {person.number}
+            </li>
+          ) : null
+        )}
       </ul>
     </div>
   );
