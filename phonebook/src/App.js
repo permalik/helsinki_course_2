@@ -10,7 +10,15 @@ const App = () => {
     let newPerson = {
       name: `${newName}`
     };
-    setPersons((array) => [...array, newPerson]);
+
+    const isAvailable = (object) =>
+      JSON.stringify(object) === JSON.stringify(newPerson);
+
+    if (persons.some(isAvailable)) {
+      alert(`${newName} is already in the phonebook.`);
+    } else {
+      setPersons((array) => [...array, newPerson]);
+    }
   };
 
   return (
